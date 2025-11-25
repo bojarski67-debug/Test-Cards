@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UCC vs. Common Law Flashcards</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .card .front, .card .back {
+      display: none;
+    }
+    .card.show .front {
+      display: block;
+    }
+    .card.show .back {
+      display: none;
+    }
+    .card.flipped .front {
+      display: none;
+    }
+    .card.flipped .back {
+      display: block;
+    }
+    .nav {
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>UCC vs. Common Law Flashcards</h1>
+  <div id="flashcard-container"></div>
+  <div class="nav">
+    <button onclick="prevCard()">Previous</button>
+    <button onclick="flipCard()">Flip</button>
+    <button onclick="nextCard()">Next</button>
+  </div>
+
+  <script>
+    const originalCards = [
+      {
+        question: "Andy buys a refrigerator from Home Depot. What law applies, and what warranties does Andy get?",
+        answer: "UCC Article 2 applies, with implied warranties.",
+        rule: "Sale of goods by a merchant triggers UCC Article 2 and implied warranties (e.g., merchantability).",
+        explanation: "A refrigerator is a good; Home Depot is a merchant."
+      },
+      {
+        question: "Andy pays a local repair shop to fix his refrigerator. Does UCC Article 2 apply?",
+        answer: "No, common law applies.",
+        rule: "Contracts for services are governed by common law, not UCC Article 2.",
+        explanation: "The contract is for repair (a service), not the sale of goods."
+      },
+      {
+        question: "Andy buys a sofa from IKEA. If it collapses during normal use, what law governs his rights?",
+        answer: "UCC Article 2 applies; Andy may claim breach of implied warranty.",
+        rule: "Sale of goods by a merchant is covered by UCC Article 2.",
+        explanation: "Sofa is tangible and movable; IKEA is a merchant."
+      }
+      // Add more cards here as needed
+    ];
+
+    let currentIndex = 0;
+    let flipped = false;
+
+    function renderCard() {
+      const container = document.getElementById("flashcard-container");
+      container.innerHTML = "";
+      const cardData = originalCards[currentIndex];
+      const card = document.createElement("div");
+      card.className = "card show";
+      if (flipped) card.classList.add("flipped");
+
+      const front = document.createElement("div");
+      front.className = "front";
+      front.innerHTML = `<strong>Question:</strong><br>${cardData.question}`;
+
+      const back = document.createElement("div");
+      back.className = "back";
+      back.innerHTML = `
+        <strong>Answer:</strong> ${cardData.answer}<br><br>
+        <strong>Rule:</strong> ${cardData.rule}<br><br>
+        <strong>Explanation:</strong> ${cardData.explanation}
+      `;
+
+      card.appendChild(front);
+      card.appendChild(back);
+      container.appendChild(card);
+    }
+
+    function flipCard() {
+      flipped = !flipped;
+      renderCard();
+    }
+
+    function nextCard() {
+      if (currentIndex < originalCards.length - 1) {
+        currentIndex++;
+        flipped = false;
+        renderCard();
+      }
+    }
+
+    function prevCard() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        flipped = false;
+        renderCard();
+      }
+    }
+
+    renderCard();
+  </script>
+</body>
+</html>
